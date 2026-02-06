@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valentine Question 💛</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #FFF6B0;
+      text-align: center;
+      margin: 0;
+      padding-top: 90px;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #541617;
+    }
+
+    h2 {
+      color: #2B254B;
+      font-weight: 500;
+    }
+
+    .buttons {
+      margin-top: 40px;
+      position: relative;
+      height: 240px;
+      width: 100%;
+    }
+
+    /* 🌸 Pastel Buttons */
+    button {
+      font-size: 20px;
+      padding: 15px 32px;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      position: absolute;
+      font-weight: 600;
+      user-select: none;
+      transition: 0.2s;
+    }
+
+    #yesBtn {
+      background: #FFB6C9;
+      color: #541617;
+      left: 38%;
+      top: 80px;
+    }
+
+    #noBtn {
+      background: #CBB8FF;
+      color: #2B254B;
+      left: 55%;
+      top: 80px;
+    }
+
+    /* Main center gif */
+    .main-gif {
+      width: 240px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+    }
+
+    /* Sticker gifs */
+    .random-gif {
+      position: absolute;
+      width: 170px;
+      border-radius: 16px;
+    }
+    .cat-flowers {
+      width: 140px;
+      display: block;
+      margin: 0 auto 16px;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      top: -10px;
+      width: 10px;
+      height: 14px;
+      border-radius: 3px;
+      pointer-events: none;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <img class="cat-flowers" src="assets/cat-flowers.jpg" alt="cat flowers">
+  <h1>Will you be my Valentine?</h1>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+
+    let yesSize = 1;
+
+    const noPhrases = [
+      "WAIT WAIT WAIT",
+      "Try the other button",
+      "You'll miss out on free food",
+      "If you press it again , I explode",
+      "Zooniggas"
+    ];
+    let phraseIndex = 0;
+
+    function moveNoButton() {
+      const maxX = window.innerWidth - 180;
+      const maxY = 200;
+
+      noBtn.style.left = `${Math.random() * maxX}px`;
+      noBtn.style.top = `${Math.random() * maxY}px`;
+
+      noBtn.textContent = noPhrases[phraseIndex];
+      phraseIndex = (phraseIndex + 1) % noPhrases.length;
+
+      yesSize += 0.18;
+      yesBtn.style.transform = `scale(${yesSize})`;
+    }
+
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    function confettiBurst(count = 120) {
+      const colors = ["#FFB6C9", "#CBB8FF", "#FFFFFF", "#FFD166"];
+
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        piece.style.animationDuration =
+          Math.random() * 2 + 1.2 + "s";
+
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 3000);
+      }
+    }
+
+    /* YES click */
+    yesBtn.addEventListener("click", () => {
+      confettiBurst();
+
+      document.body.innerHTML = `
+        <div>
+          <img class="main-gif" src="assets/flexing-cat.gif">
+          <h1>WOWOWOWWOWOWOOWOWO</h1>
+          <h2>THE CRUSH SAID YES</h2>
+        </div>
+
+        <!-- Fixed scattered stickers -->
+        <img src="assets/dancing-cat-cat.gif" class="random-gif"
+             style="left: 6%; top: 20%; transform: rotate(-12deg);">
+
+        <img src="assets/cat-dance.gif" class="random-gif"
+             style="left: 78%; top: 18%; transform: rotate(14deg);">
+
+        <img src="assets/good-morning.gif" class="random-gif"
+             style="left: 18%; top: 60%; transform: rotate(8deg);">
+
+        <img src="assets/cat-dancing.gif" class="random-gif"
+             style="left: 74%; top: 70%; transform: rotate(-10deg);">
+      `;
+
+      setTimeout(() => confettiBurst(80), 400);
+    });
+  </script>
+
+</body>
+</html>
